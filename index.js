@@ -47,6 +47,12 @@ const run = async () => {
             res.send(service)
         })
 
+        app.post('/services', async (req, res) => {
+            const service = req.body
+            const result = await serviceCollection.insertOne(service)
+            res.send(result)
+        })
+
 
 
         // posting review from client site to database
@@ -78,7 +84,7 @@ const run = async () => {
             const id = req.params.id
             const quiry = { _id: ObjectId(id) }
             const result = await reviewCollection.deleteOne(quiry)
-            console.log(result);
+            // console.log(result);
             res.send(result)
         })
 
@@ -86,7 +92,7 @@ const run = async () => {
         app.patch('/review/:id', async (req, res) => {
             const id = req.params.id
             const quiry = { _id: ObjectId(id) }
-            console.log(req.body);
+            // console.log(req.body);
             const updatedReview = {
                 $set: req.body
             }
