@@ -27,7 +27,8 @@ const run = async () => {
 
         // Token
         app.post('/jwt', (req, res) => {
-
+            const user = req.body
+            console.log(user);
         })
 
         // Geting all services from database
