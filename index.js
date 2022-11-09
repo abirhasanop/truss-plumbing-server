@@ -19,7 +19,11 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@clu
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 const verifyJwt = (req, res, next) => {
-    next()
+    // console.log(req.headers.authorization);
+    const authHeader = req.headers.authorization
+    if (!authHeader) {
+        res.send({ message: "Unauthorized Access" })
+    }
 }
 
 
@@ -87,13 +91,14 @@ const run = async () => {
         // })
 
 
-        app.get('/review', async (req, res) => {
-            console.log(req.query);
+        // Getting Review by email
+        app.get('/review', verifyJwt, async (req, res) => {
+            // console.log(req.query);
             // let query = {
             //     userEmail: req.query.email
             // }
 
-            console.log(req.headers);
+            // console.log(req.headers.authorization);
             let query = {}
 
             if (req.query.email) {
