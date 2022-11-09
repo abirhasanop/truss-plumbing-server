@@ -29,6 +29,8 @@ const run = async () => {
         app.post('/jwt', (req, res) => {
             const user = req.body
             console.log(user);
+            const token = jwt.sign(user, process.env.ACCES_TOKEN_SECRET, { expiresIn: '1h' })
+            res.send({ token })
         })
 
         // Geting all services from database
@@ -67,7 +69,6 @@ const run = async () => {
         // posting review from client site to database
         app.post('/review', async (req, res) => {
             const review = req.body
-            // console.log(review);
             const result = await reviewCollection.insertOne(review)
             res.send(result)
         })
@@ -93,7 +94,6 @@ const run = async () => {
             const id = req.params.id
             const quiry = { _id: ObjectId(id) }
             const result = await reviewCollection.deleteOne(quiry)
-            // console.log(result);
             res.send(result)
         })
 
@@ -101,7 +101,6 @@ const run = async () => {
         app.patch('/review/:id', async (req, res) => {
             const id = req.params.id
             const quiry = { _id: ObjectId(id) }
-            // console.log(req.body);
             const updatedReview = {
                 $set: req.body
             }
