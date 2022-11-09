@@ -1,5 +1,6 @@
 const express = require('express');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const jwt = require("jsonwebtoken")
 const app = express()
 const cors = require("cors")
 const port = process.env.PORT || 5000
@@ -22,6 +23,12 @@ const run = async () => {
         // Collections
         const serviceCollection = client.db("DbtrussPlumbing").collection("allServices")
         const reviewCollection = client.db("dbReview").collection("allReview")
+
+
+        // Token
+        app.post('/jwt', (req, res) => {
+
+        })
 
         // Geting all services from database
         app.get('/services', async (req, res) => {
