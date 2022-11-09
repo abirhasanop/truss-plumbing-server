@@ -18,6 +18,12 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@clu
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
+const verifyJwt = (req, res, next) => {
+    next()
+}
+
+
+
 const run = async () => {
     try {
         // Collections
@@ -73,12 +79,35 @@ const run = async () => {
             res.send(result)
         })
         // geting reviews from database
+        // app.get('/review', async (req, res) => {
+        //     const quiry = {}
+        //     const cursor = reviewCollection.find(quiry)
+        //     const result = await cursor.toArray()
+        //     res.send(result)
+        // })
+
+
         app.get('/review', async (req, res) => {
-            const quiry = {}
-            const cursor = reviewCollection.find(quiry)
-            const result = await cursor.toArray()
-            res.send(result)
+            console.log(req.query);
+            // let query = {
+            //     userEmail: req.query.email
+            // }
+
+            console.log(req.headers);
+            let query = {}
+
+            if (req.query.email) {
+                query = {
+                    userEmail: req.query.email
+                }
+            }
+
+            const cursor = reviewCollection.find(query)
+            const review = await cursor.toArray()
+            res.send(review)
         })
+
+
 
         // Getting Single Review
         app.get('/review/:id', async (req, res) => {
