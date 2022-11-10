@@ -47,7 +47,7 @@ const run = async () => {
             const user = req.body
             // console.log(user);
             const token = jwt.sign(user, process.env.ACCES_TOKEN_SECRET)
-            console.log({ token });
+            // console.log({ token });
             res.send({ token })
         })
 
@@ -113,7 +113,7 @@ const run = async () => {
             //     userEmail: req.query.email
             // }
 
-            console.log(req.headers.authorization);
+            // console.log(req.headers.authorization);
 
             let query = {}
 
@@ -123,7 +123,7 @@ const run = async () => {
                 }
             }
 
-            const cursor = reviewCollection.find(query)
+            const cursor = reviewCollection.find(query).sort({ "date": -1 })
             const review = await cursor.toArray()
             res.send(review)
         })
@@ -131,9 +131,13 @@ const run = async () => {
 
 
 
+
+
         app.get('/allreview', async (req, res) => {
+
+
             let quiry = {}
-            const cursor = reviewCollection.find(quiry)
+            const cursor = reviewCollection.find(quiry).sort({ "date": -1 })
             const result = await cursor.toArray()
             res.send(result)
         })
