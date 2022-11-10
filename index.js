@@ -54,7 +54,7 @@ const run = async () => {
         // Geting all services from database
         app.get('/services', async (req, res) => {
             const quiry = {}
-            const cursor = serviceCollection.find(quiry)
+            const cursor = serviceCollection.find(quiry).sort({ "date": -1 })
             const result = await cursor.toArray()
             res.send(result)
         })
@@ -62,7 +62,7 @@ const run = async () => {
         // geting limited service from database
         app.get('/limitedServices', async (req, res) => {
             const quiry = {}
-            const cursor = serviceCollection.find(quiry).limit(3)
+            const cursor = serviceCollection.find(quiry).sort({ "date": -1 }).limit(3)
             const result = await cursor.toArray()
             res.send(result)
         })
