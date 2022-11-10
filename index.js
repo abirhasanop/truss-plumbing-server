@@ -90,30 +90,12 @@ const run = async () => {
             const result = await reviewCollection.insertOne(review)
             res.send(result)
         })
-        // geting reviews from database
-        // app.get('/review', async (req, res) => {
-        //     const quiry = {}
-        //     const cursor = reviewCollection.find(quiry)
-        //     const result = await cursor.toArray()
-        //     res.send(result)
-        // })
+
 
 
         // Getting Review by email
         app.get('/review', verifyJwt, async (req, res) => {
-            // const decoded = req.decoded
-            // console.log("Inside Orders Api", decoded);
-            // if (decoded.email !== req.query.email) {
-            //     res.status(403).send({ message: 'unauthorized' })
-            // }
 
-
-            // console.log(req.query);
-            // let query = {
-            //     userEmail: req.query.email
-            // }
-
-            // console.log(req.headers.authorization);
 
             let query = {}
 
